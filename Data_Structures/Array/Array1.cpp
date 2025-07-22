@@ -19,6 +19,10 @@ int main() {
       // }
       smallest = min(marks[i],smallest); //since in C++ min and max are implecit func
     }
-    cout << smallest;
+    for (int i=0;i<size;i++){
+      if (smallest==marks[i]){
+        cout<<"the index of the smallest number is : " <<i;
+      }
+    }
     return 0;
 }
