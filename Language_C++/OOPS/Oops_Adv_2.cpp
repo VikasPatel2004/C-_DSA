@@ -41,6 +41,7 @@ int main(){
 
     *(s2.cgpaPtr) = 8.8;
     s1.getInfo();
+    s2.name = "neha";
     s2.getInfo();
 
 }
