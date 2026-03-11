@@ -31,6 +31,15 @@ public:
             head = newNode;
         }
     }
+    void push_back(int val){
+        Node* newNode = new Node(val);
+        if(head==NULL){
+            head=tail=newNode;
+        } else{
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
 
     void printList() {
         Node* temp = head;
@@ -47,6 +56,7 @@ int main() {
     ll.push_front(1);
     ll.push_front(2);
     ll.push_front(3);
+    ll.push_back(4);
 
     ll.printList();  // Output: 3 -> 2 -> 1 -> NULL
 
