@@ -67,6 +67,22 @@ public:
             tail = temp;
         }
     }
+    void insert(int val , int pos){
+        if(head==NULL){
+            cout<<"ll is empty";
+            return;
+        }
+        else if (pos == 0){
+            push_front(val);
+        }
+        Node* temp = head;
+        for(int i=0 ;i<pos-1;i++){
+            temp = temp->next;
+        }
+        Node* newNode = new Node(val); // ye hamne new node create kari hai
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
 
     void printList() {
         Node* temp = head;
@@ -86,6 +102,7 @@ int main() {
     ll.push_back(4);
     ll.pop_front();
     ll.pop_back();
+    ll.insert(4,1);
 
     ll.printList();  // Output: 3 -> 2 -> 1 -> NULL
 
