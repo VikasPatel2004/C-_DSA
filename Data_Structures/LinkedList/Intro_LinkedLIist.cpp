@@ -40,6 +40,33 @@ public:
             tail = newNode;
         }
     }
+    void pop_front(){
+        if(head == NULL){
+            cout << "The LL is empty";
+        }
+        else{
+            Node* temp = head;
+            head = head->next;
+            temp->next = NULL;
+            delete temp;
+        }
+
+    }
+    void pop_back(){
+        if(head==NULL){
+            cout << "The LL is empty";
+            return;
+        }
+        else{
+            Node*temp = head;
+            while(temp->next!=tail){
+                temp=temp->next;
+            }
+            temp->next =NULL;
+            delete tail;
+            tail = temp;
+        }
+    }
 
     void printList() {
         Node* temp = head;
@@ -57,6 +84,8 @@ int main() {
     ll.push_front(2);
     ll.push_front(3);
     ll.push_back(4);
+    ll.pop_front();
+    ll.pop_back();
 
     ll.printList();  // Output: 3 -> 2 -> 1 -> NULL
 
