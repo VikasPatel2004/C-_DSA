@@ -83,6 +83,24 @@ public:
         newNode->next = temp->next;
         temp->next = newNode;
     }
+    int searchList(int key){
+        Node* temp = head ;
+        int idx = 0;
+
+        while(temp!=NULL){
+            if(temp->data == key){
+                return idx;
+            }
+            temp = temp->next;
+            idx++;
+ 
+        }
+        return -1;
+
+    
+    }
+
+
 
     void printList() {
         Node* temp = head;
@@ -103,8 +121,10 @@ int main() {
     ll.pop_front();
     ll.pop_back();
     ll.insert(4,1);
+    
 
     ll.printList();  // Output: 3 -> 2 -> 1 -> NULL
+    cout << ll.searchList(4);
 
     return 0;
 }
