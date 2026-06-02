@@ -1,55 +1,81 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
-bool isValid(vector<int> &arr, int N,int M,int maxAllowed){
-    int painter = 1 , time = 0;
-for(int i=0;i<N;i++){
-    if(arr[i]>maxAllowed){
-        return false;
+class Solution {
+
+public:
+
+    bool isValid(vector<int>& boards,
+                 int painters,
+                 int maxTime) {
+
+        int painterCount = 1;
+        int time = 0;
+
+        for(int i = 0; i < boards.size(); i++) {
+
+            if(time + boards[i] <= maxTime) {
+
+                time += boards[i];
+            }
+            else {
+
+                painterCount++;
+                time = boards[i];
+            }
+        }
+
+        return painterCount <= painters;
     }
-    else if(time+arr[i]<=maxAllowed){
-        time+=arr[i];
+
+    int painterPartition(vector<int>& boards,
+                         int painters) {
+
+        int total = 0;
+        int maxBoard = 0;
+
+        for(int x : boards) {
+
+            total += x;
+            maxBoard = max(maxBoard, x);
+        }
+
+        int st = maxBoard;
+        int end = total;
+
+        int ans = -1;
+
+        while(st <= end) {
+
+            int mid = st + (end - st) / 2;
+
+            if(isValid(boards, painters, mid)) {
+
+                ans = mid;
+                end = mid - 1;
+            }
+            else {
+
+                st = mid + 1;
+            }
+        }
+
+        return ans;
     }
-    else{
-     painter++;
-     time = arr[i];
-    }
-}
-return painter<=M;
-}
+};
 
-int Painter_Partition(vector<int> &arr,int N,int M){
-    int sum=0;
-    for(int i=0;i<N;i++){
-    sum+=arr[i];
-    }
+int main() {
 
-    int start = arr[0];
-    int end = sum;
-    int mid = 0;
-    int ans = 0;
+    Solution s;
 
-    while(start<=end){
-       mid = start+(end-start)/2;
-       if(isValid(arr,N,M,mid)) {
-        ans = mid;
-        end = mid-1; // trying to find more smaller 
-       }
-       else{
-        start = mid + 1;
-       }
-    }
-    return ans;
+    vector<int> boards = {10,20,30,40};
 
-}
+    int painters = 2;
 
+    cout << "Minimum Time = "
+         << s.painterPartition(boards, painters);
 
-
-int main(){
-    vector<int> arr = {40,30,10,20};
-    int N = 4 , M =2;
-   int Min_Time = Painter_Partition(arr,N,M);
-   cout << "the minimum time taken by the painters is : " <<Min_Time;
-   return 0;
+    return 0;
 }
