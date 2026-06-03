@@ -1,74 +1,58 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
+#include <vector>
 using namespace std;
 
-class Solution {
 
-public:
+class Solution{
+    public:
 
-    bool isPossible(vector<int>& stalls,
-                    int cows,
-                    int minDist) {
+    bool isPossible(vector<int> &arr , int cows , int minallowed){
+        int laststallpos = arr[0] , cowcount = 1;
+        for(int i = 0 ; i<arr.size() ; i++){
+            if(arr[i]-laststallpos >= minallowed){
+                cowcount++;
+                laststallpos = arr[i];
 
-        int count = 1;
-
-        int lastPos = stalls[0];
-
-        for(int i = 1; i < stalls.size(); i++) {
-
-            if(stalls[i] - lastPos >= minDist) {
-
-                count++;
-
-                lastPos = stalls[i];
-
-                if(count == cows)
+                if(cowcount == cows){
                     return true;
+                }
             }
         }
-
         return false;
+
     }
 
-    int aggressiveCows(vector<int>& stalls,
-                       int cows) {
 
-        sort(stalls.begin(), stalls.end());
+    int aggresiveCow(vector<int> &arr , int cows){
+        sort(arr.begin(),arr.end());
+        int N = arr.size()-1 , ans = -1;
+        int st = 1 , end = arr[N]-arr[0]; // this the min search array in which our min value can exist
 
-        int st = 1;
-
-        int end = stalls.back() - stalls.front();
-
-        int ans = -1;
-
-        while(st <= end) {
-
-            int mid = st + (end - st) / 2;
-
-            if(isPossible(stalls, cows, mid)) {
-
+        while(st<=end){
+            int mid = st+(end-st)/2;
+            if(isPossible(arr,cows,mid)){
                 ans = mid;
-
-                st = mid + 1;
+                st = mid+1 ;
             }
-            else {
-
-                end = mid - 1;
+            else{
+                end = mid-1;
             }
+
         }
-
         return ans;
+
     }
+
 };
 
-int main() {
-
+int main(){
     Solution s;
-
-    vector<int> stalls = {1,2,4,8,9};
-
-    cout << s.aggressiveCows(stalls, 3);
+    vector<int> arr = {1,2,8,4,9}; // given stalls postions for cows 
+    int cows = 3; // cows to be placed
+    int Mindistance = s.aggresiveCow(arr,cows);
+    cout << "the minimum distance between the stalls of aggresive cows is : " <<Mindistance;
 
     return 0;
+
 }
